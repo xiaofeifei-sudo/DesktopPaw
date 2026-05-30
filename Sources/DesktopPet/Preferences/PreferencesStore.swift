@@ -3,7 +3,7 @@ import Foundation
 
 @MainActor
 public final class PreferencesStore: PetWindowFrameStoring {
-    public static let defaultPetId = "starter-pet"
+    public static let defaultPetId = "cat"
     public static let defaultPetScale = 1.0
     public static let defaultMood = 0.8
     public static let defaultHunger = 0.2

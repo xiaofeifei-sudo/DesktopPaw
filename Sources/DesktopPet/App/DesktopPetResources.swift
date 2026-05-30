@@ -1,7 +1,7 @@
 import Foundation
 
 public enum DesktopPetResources {
-    public static let swiftPMResourceBundleName = "DesktopPet_DesktopPet.bundle"
+    public static let swiftPMResourceBundleName = "MofuPaw_DesktopPet.bundle"
 
     public static var bundle: Bundle {
         let candidateURLs = [

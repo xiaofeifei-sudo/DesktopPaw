@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 2,
+  "id": "cat",
+  "displayName": "Cat",
+  "description": "The default built-in desktop companion.",
+  "asset": "spritesheet.png",
+  "preview": "preview.png",
+  "assetKind": "spriteSheet",
+  "frameSize": {
+    "width": 256,
+    "height": 256
+  },
+  "spritesheet": {
+    "columns": 8,
+    "rows": 7
+  },
+  "defaultScale": 1.0,
+  "actions": [
+    {
+      "id": "idle_default",
+      "displayName": "Idle",
+      "role": "idle",
+      "tags": [],
+      "frames": [
+        { "column": 0, "row": 0 },
+        { "column": 1, "row": 0 },
+        { "column": 2, "row": 0 },
+        { "column": 3, "row": 0 },
+        { "column": 4, "row": 0 },
+        { "column": 5, "row": 0 },
+        { "column": 6, "row": 0 },
+        { "column": 7, "row": 0 }
+      ],
+      "frameDurationMs": 160,
+      "loop": true
+    },
+    {
+      "id": "walking_default",
+      "displayName": "Walking",
+      "role": "walking",
+      "tags": [],
+      "frames": [
+        { "column": 0, "row": 1 },
+        { "column": 1, "row": 1 },
+        { "column": 2, "row": 1 },
+        { "column": 3, "row": 1 },
+        { "column": 4, "row": 1 },
+        { "column": 5, "row": 1 },
+        { "column": 6, "row": 1 },
+        { "column": 7, "row": 1 }
+      ],
+      "frameDurationMs": 140,
+      "loop": true
+    },
+    {
+      "id": "sleeping_default",
+      "displayName": "Sleeping",
+      "role": "sleeping",
+      "tags": [],
+      "frames": [
+        { "column": 0, "row": 2 },
+        { "column": 1, "row": 2 },
+        { "column": 2, "row": 2 },
+        { "column": 3, "row": 2 },
+        { "column": 4, "row": 2 },
+        { "column": 5, "row": 2 },
+        { "column": 6, "row": 2 },
+        { "column": 7, "row": 2 }
+      ],
+      "frameDurationMs": 300,
+      "loop": true
+    },
+    {
+      "id": "happy_default",
+      "displayName": "Happy",
+      "role": "happy",
+      "tags": [],
+      "frames": [
+        { "column": 0, "row": 3 },
+        { "column": 1, "row": 3 },
+        { "column": 2, "row": 3 },
+        { "column": 3, "row": 3 },
+        { "column": 4, "row": 3 },
+        { "column": 5, "row": 3 },
+        { "column": 6, "row": 3 },
+        { "column": 7, "row": 3 }
+      ],
+      "frameDurationMs": 120,
+      "loop": false,
+      "nextActionId": "idle_default"
+    },
+    {
+      "id": "eating_default",
+      "displayName": "Eating",
+      "role": "eating",
+      "tags": [],
+      "frames": [
+        { "column": 0, "row": 4 },
+        { "column": 1, "row": 4 },
+        { "column": 2, "row": 4 },
+        { "column": 3, "row": 4 },
+        { "column": 4, "row": 4 },
+        { "column": 5, "row": 4 },
+        { "column": 6, "row": 4 },
+        { "column": 7, "row": 4 }
+      ],
+      "frameDurationMs": 120,
+      "loop": false,
+      "nextActionId": "idle_default"
+    },
+    {
+      "id": "jumping_default",
+      "displayName": "Jumping",
+      "role": "jumping",
+      "tags": [],
+      "frames": [
+        { "column": 0, "row": 5 },
+        { "column": 1, "row": 5 },
+        { "column": 2, "row": 5 },
+        { "column": 3, "row": 5 },
+        { "column": 4, "row": 5 },
+        { "column": 5, "row": 5 },
+        { "column": 6, "row": 5 },
+        { "column": 7, "row": 5 }
+      ],
+      "frameDurationMs": 110,
+      "loop": false,
+      "nextActionId": "idle_default"
+    },
+    {
+      "id": "dragging_default",
+      "displayName": "Dragging",
+      "role": "dragging",
+      "tags": [],
+      "frames": [
+        { "column": 0, "row": 6 },
+        { "column": 1, "row": 6 },
+        { "column": 2, "row": 6 },
+        { "column": 3, "row": 6 },
+        { "column": 4, "row": 6 },
+        { "column": 5, "row": 6 },
+        { "column": 6, "row": 6 },
+        { "column": 7, "row": 6 }
+      ],
+      "frameDurationMs": 160,
+      "loop": true
+    }
+  ]
+}

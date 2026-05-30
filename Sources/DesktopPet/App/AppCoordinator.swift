@@ -1770,12 +1770,12 @@ final class AppDependencyContainer {
 
     private static func fallbackDefinition() -> PetDefinition {
         PetDefinition(
-            id: "starter-pet",
-            displayName: "Starter Pet",
+            id: "cat",
+            displayName: "Cat",
             description: "Fallback built-in desktop companion.",
             assetName: PetDefinition.placeholderAssetName,
             previewAssetName: PetDefinition.placeholderAssetName,
-            frameSize: CGSizeCodable(width: 128, height: 128),
+            frameSize: CGSizeCodable(width: 256, height: 256),
             spritesheet: SpriteSheetLayout(columns: 1, rows: 1),
             defaultScale: 1.0,
             animations: Dictionary(uniqueKeysWithValues: PetState.allCases.map { state in

@@ -1,66 +1,20 @@
 import Foundation
 
 public final class BuiltInPetDefinitionProvider {
-    public init() {}
+    private let decoder: JSONDecoder
+
+    public init(decoder: JSONDecoder = JSONDecoder()) {
+        self.decoder = decoder
+    }
 
     public func loadBuiltInPet() throws -> PetDefinition {
-        try PetDefinition(
-            id: "starter-pet",
-            displayName: "Starter Pet",
-            description: "A small built-in desktop companion.",
-            assetName: "starter-pet-spritesheet",
-            previewAssetName: "starter-pet-preview",
-            frameSize: CGSizeCodable(width: 128, height: 128),
-            spritesheet: SpriteSheetLayout(columns: 7, rows: 1),
-            defaultScale: 1.0,
-            animations: [
-                .idle: AnimationClip(
-                    state: .idle,
-                    frames: [SpriteFrame(column: 0, row: 0)],
-                    frameDurationMs: 160,
-                    loop: true
-                ),
-                .walking: AnimationClip(
-                    state: .walking,
-                    frames: [SpriteFrame(column: 1, row: 0)],
-                    frameDurationMs: 140,
-                    loop: true
-                ),
-                .sleeping: AnimationClip(
-                    state: .sleeping,
-                    frames: [SpriteFrame(column: 2, row: 0)],
-                    frameDurationMs: 300,
-                    loop: true
-                ),
-                .happy: AnimationClip(
-                    state: .happy,
-                    frames: [SpriteFrame(column: 3, row: 0)],
-                    frameDurationMs: 120,
-                    loop: false,
-                    nextState: .idle
-                ),
-                .eating: AnimationClip(
-                    state: .eating,
-                    frames: [SpriteFrame(column: 4, row: 0)],
-                    frameDurationMs: 120,
-                    loop: false,
-                    nextState: .idle
-                ),
-                .jumping: AnimationClip(
-                    state: .jumping,
-                    frames: [SpriteFrame(column: 5, row: 0)],
-                    frameDurationMs: 110,
-                    loop: false,
-                    nextState: .idle
-                ),
-                .dragging: AnimationClip(
-                    state: .dragging,
-                    frames: [SpriteFrame(column: 6, row: 0)],
-                    frameDurationMs: 160,
-                    loop: true
-                )
-            ]
-        ).validated()
+        guard let manifestURL = DesktopPetResources.url(named: "manifest", extension: "json") else {
+            throw PetAssetError.invalidPackageStructure("Built-in pet manifest.json not found in bundle.")
+        }
+
+        let data = try Data(contentsOf: manifestURL)
+        let manifest = try decoder.decode(PetPackageManifest.self, from: data)
+        return try manifest.petDefinition().validated()
     }
 
     public func bundledResourceExists(named name: String, extension fileExtension: String = "png") -> Bool {

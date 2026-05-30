@@ -10,7 +10,7 @@ public protocol PetLibraryStoring {
 }
 
 public final class PetLibraryStore: PetLibraryStoring {
-    public static let defaultBuiltInPetId = "starter-pet"
+    public static let defaultBuiltInPetId = "cat"
     public static let petsDirectoryName = "Pets"
     public static let manifestFileName = "manifest.json"
     public static let imageFileName = "image.png"

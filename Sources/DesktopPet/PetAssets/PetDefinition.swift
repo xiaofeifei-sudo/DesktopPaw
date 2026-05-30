@@ -1,7 +1,7 @@
 import Foundation
 
 public struct PetDefinition: Codable, Equatable {
-    public static let placeholderAssetName = "placeholder-pet"
+    public static let placeholderAssetName = "preview"
 
     public let id: String
     public let displayName: String
