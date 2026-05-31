@@ -161,7 +161,7 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/your-username/MofuPaw.git
+git clone https://github.com/Estellanini/MofuPaw.git
 cd MofuPaw
 
 # 构建

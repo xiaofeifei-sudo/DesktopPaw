@@ -161,7 +161,7 @@ A fully data-driven pet simulation engine:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/MofuPaw.git
+git clone https://github.com/Estellanini/MofuPaw.git
 cd MofuPaw
 
 # Build
