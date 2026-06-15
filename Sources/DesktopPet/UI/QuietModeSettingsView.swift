@@ -10,14 +10,14 @@ public struct QuietModeSettingsView: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Toggle("Quiet hours", isOn: Binding(
+            Toggle(L10n.Companionship.quietHours, isOn: Binding(
                 get: { model.preferences.quietHours != nil },
                 set: { model.setQuietHoursEnabled($0) }
             ))
 
             if model.preferences.quietHours != nil {
                 HStack {
-                    Text("From")
+                    Text(L10n.Companionship.from)
                     DatePicker(
                         "",
                         selection: Binding(
@@ -28,7 +28,7 @@ public struct QuietModeSettingsView: View {
                     )
                     .labelsHidden()
 
-                    Text("To")
+                    Text(L10n.Companionship.to)
                     DatePicker(
                         "",
                         selection: Binding(
@@ -41,7 +41,7 @@ public struct QuietModeSettingsView: View {
                 }
 
                 if model.isQuietActive {
-                    Text("Quiet mode is currently active")
+                    Text(L10n.Companionship.quietActive)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -50,11 +50,11 @@ public struct QuietModeSettingsView: View {
             Divider()
 
             if model.isQuietActive {
-                Button("Resume bubbles now") {
+                Button(L10n.Companionship.resumeBubblesNow) {
                     model.clearQuietMode()
                 }
             } else {
-                Button("Quiet for 1 hour") {
+                Button(L10n.Companionship.quietForOneHour) {
                     model.quietForOneHour()
                 }
             }

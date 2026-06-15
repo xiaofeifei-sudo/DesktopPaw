@@ -14,7 +14,7 @@ public struct CompanionshipSettingsView: View {
             RelationshipStatusView(model: model)
 
             Toggle(
-                "Show relationship prompts",
+                L10n.Companionship.showRelationshipPrompts,
                 isOn: Binding(
                     get: { model.preferences.showRelationshipPrompts },
                     set: { model.setRelationshipPromptsEnabled($0) }
@@ -23,12 +23,12 @@ public struct CompanionshipSettingsView: View {
 
             Divider()
 
-            TextField("Pet nickname", text: Binding(
+            TextField(L10n.Companionship.petNickname, text: Binding(
                 get: { model.currentPetNickname ?? "" },
                 set: { model.setPetNickname($0) }
             ))
 
-            TextField("Your nickname", text: Binding(
+            TextField(L10n.Settings.yourNickname, text: Binding(
                 get: { model.preferences.userNickname ?? "" },
                 set: { model.setUserNickname($0) }
             ))
@@ -39,20 +39,20 @@ public struct CompanionshipSettingsView: View {
 
             Divider()
 
-            Button("Reset relationship", role: .destructive) {
+            Button(L10n.Companionship.resetRelationship, role: .destructive) {
                 showingResetConfirmation = true
             }
             .confirmationDialog(
-                "Reset relationship?",
+                L10n.Companionship.resetConfirmTitle,
                 isPresented: $showingResetConfirmation,
                 titleVisibility: .visible
             ) {
-                Button("Reset", role: .destructive) {
+                Button(L10n.Companionship.reset, role: .destructive) {
                     model.resetRelationship()
                 }
-                Button("Cancel", role: .cancel) {}
+                Button(L10n.Common.cancel, role: .cancel) {}
             } message: {
-                Text("This will reset your relationship with the current pet back to Lv.1. This cannot be undone.")
+                Text(L10n.Companionship.resetMessage)
             }
         }
     }

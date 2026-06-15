@@ -5,13 +5,13 @@ public struct CustomPetPlaceholderView: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Custom pet packages are planned for a future version.")
+            Text(L10n.PetLibrary.plannedNotice)
                 .foregroundStyle(.secondary)
             Text("Reserved package folder: \(SettingsViewModel.customPetPackageFolder)")
                 .textSelection(.enabled)
             Text("Future format: \(SettingsViewModel.customPetPackageFormat)")
                 .textSelection(.enabled)
-            Button("Import Later") {}
+            Button(L10n.PetLibrary.importLater) {}
                 .disabled(true)
         }
     }

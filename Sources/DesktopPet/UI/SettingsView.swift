@@ -2,6 +2,7 @@ import SwiftUI
 
 public struct SettingsView: View {
     @ObservedObject private var model: SettingsViewModel
+    @ObservedObject private var languageManager: LanguageManager
     private let companionModel: CompanionshipSettingsViewModel?
     private let interactiveBubbleModel: InteractiveBubbleSettingsViewModel?
     private let aiModel: AISettingsViewModel?
@@ -20,7 +21,8 @@ public struct SettingsView: View {
         libraryModel: PetLibraryViewModel? = nil,
         importModel: PetImportViewModel? = nil,
         petdexURLImportModel: PetdexURLImportViewModel? = nil,
-        actionLibraryModel: ActionLibraryViewModel? = nil
+        actionLibraryModel: ActionLibraryViewModel? = nil,
+        languageManager: LanguageManager? = nil
     ) {
         self.model = model
         self.companionModel = companionModel
@@ -31,13 +33,14 @@ public struct SettingsView: View {
         self.importModel = importModel
         self.petdexURLImportModel = petdexURLImportModel
         self.actionLibraryModel = actionLibraryModel
+        self.languageManager = languageManager ?? LanguageManager()
     }
 
     public var body: some View {
         Form {
-            Section("Desktop Pet") {
+            Section(L10n.Settings.desktopPet) {
                 Toggle(
-                    "Show Pet",
+                    L10n.Settings.showPet,
                     isOn: Binding(
                         get: { model.isPetVisible },
                         set: { model.setPetVisible($0) }
@@ -59,7 +62,7 @@ public struct SettingsView: View {
                 }
 
                 Toggle(
-                    "Random Walking",
+                    L10n.Settings.randomWalking,
                     isOn: Binding(
                         get: { model.isRandomWalkingEnabled },
                         set: { model.setRandomWalkingEnabled($0) }
@@ -67,7 +70,7 @@ public struct SettingsView: View {
                 )
 
                 Toggle(
-                    "Sound",
+                    L10n.Settings.sound,
                     isOn: Binding(
                         get: { model.isSoundEnabled },
                         set: { model.setSoundEnabled($0) }
@@ -75,7 +78,7 @@ public struct SettingsView: View {
                 )
 
                 Toggle(
-                    "Launch at Login",
+                    L10n.Settings.launchAtLogin,
                     isOn: Binding(
                         get: { model.isLaunchAtLoginEnabled },
                         set: { model.setLaunchAtLoginEnabled($0) }
@@ -83,18 +86,18 @@ public struct SettingsView: View {
                 )
 
                 HStack {
-                    Text("Status")
+                    Text(L10n.Settings.status)
                     Spacer()
                     Text(model.petStatusText)
                         .foregroundStyle(.secondary)
                 }
 
-                Button("Reset Position") {
+                Button(L10n.Settings.resetPosition) {
                     model.resetPosition()
                 }
             }
 
-            Section("Custom Pet") {
+            Section(L10n.Settings.customPet) {
                 if let libraryModel, let importModel {
                     PetLibraryView(
                         libraryModel: libraryModel,
@@ -107,32 +110,41 @@ public struct SettingsView: View {
                 }
             }
 
-            Section("Speech Bubbles") {
+            Section(L10n.Settings.speechBubbles) {
                 PetBubbleSettingsView(model: model)
             }
 
             if let interactiveBubbleModel {
-                Section("Smart Bubbles") {
+                Section(L10n.Settings.smartBubbles) {
                     InteractiveBubbleSettingsView(model: interactiveBubbleModel)
                 }
             }
 
             if let companionModel {
-                Section("Companionship") {
+                Section(L10n.Settings.companionship) {
                     CompanionshipSettingsView(model: companionModel)
                 }
             }
 
             if let aiModel {
-                Section("AI Companion") {
+                Section(L10n.Settings.aiCompanion) {
                     AISettingsView(model: aiModel)
                 }
             }
 
             if let aiVisualModel {
-                Section("AI Visual Expression") {
+                Section(L10n.Settings.aiVisualExpression) {
                     AIVisualSettingsView(model: aiVisualModel)
                 }
+            }
+
+            Section(L10n.Settings.language) {
+                Picker(L10n.Settings.language, selection: $languageManager.currentLanguage) {
+                    ForEach(AppLanguage.allCases, id: \.self) { lang in
+                        Text(lang.displayName).tag(lang)
+                    }
+                }
+                .pickerStyle(.segmented)
             }
         }
         .formStyle(.grouped)

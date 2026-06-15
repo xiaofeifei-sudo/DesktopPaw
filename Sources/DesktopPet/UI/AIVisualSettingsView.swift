@@ -60,20 +60,20 @@ public struct AIVisualSettingsView: View {
     private var toggleSection: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text("AI Visual Expression")
+                Text(L10n.AIVisual.title)
                     .font(.headline)
-                Text("Let AI create temporary visual changes for your pet.")
+                Text(L10n.AIVisual.subtitle)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
             Spacer()
             if model.isEnabled {
-                Button("Disable") {
+                Button(L10n.AIVisual.disable) {
                     model.disable()
                 }
                 .buttonStyle(.bordered)
             } else {
-                Button("Enable") {
+                Button(L10n.AIVisual.enable) {
                     model.requestEnable()
                 }
                 .buttonStyle(.borderedProminent)
@@ -83,7 +83,7 @@ public struct AIVisualSettingsView: View {
 
     private var providerSection: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("Image Provider")
+            Text(L10n.AIVisual.imageProvider)
                 .font(.subheadline.weight(.medium))
 
             if model.isProviderConfigured {
@@ -103,7 +103,7 @@ public struct AIVisualSettingsView: View {
                     .font(.caption)
                 Spacer()
                 if !model.isCLIProvider {
-                    Button("Reconfigure") {
+                    Button(L10n.AIVisual.reconfigure) {
                         model.openProviderConfig()
                     }
                     .buttonStyle(.bordered)
@@ -112,7 +112,7 @@ public struct AIVisualSettingsView: View {
             }
 
             if !model.providerInfos.isEmpty {
-                Picker("Provider", selection: Binding(
+                Picker(L10n.AIVisual.provider, selection: Binding(
                     get: { model.currentProviderId ?? "" },
                     set: { id in
                         if !id.isEmpty { model.selectProvider(id) }
@@ -122,7 +122,7 @@ public struct AIVisualSettingsView: View {
                         HStack {
                             Text(info.displayName)
                             if !info.isConfigured {
-                                Text("(not configured)")
+                                Text(L10n.AIVisual.notConfiguredShort)
                                     .foregroundStyle(.secondary)
                             }
                         }
@@ -148,12 +148,12 @@ public struct AIVisualSettingsView: View {
             HStack {
                 Image(systemName: "exclamationmark.circle.fill")
                     .foregroundStyle(.orange)
-                Text("Not configured")
+                Text(L10n.AIVisual.notConfigured)
                     .font(.caption)
             }
 
             if !model.providerInfos.isEmpty {
-                Picker("Provider", selection: Binding(
+                Picker(L10n.AIVisual.provider, selection: Binding(
                     get: { model.currentProviderId ?? "" },
                     set: { id in
                         if !id.isEmpty { model.selectProvider(id) }
@@ -163,7 +163,7 @@ public struct AIVisualSettingsView: View {
                         HStack {
                             Text(info.displayName)
                             if !info.isConfigured {
-                                Text("(not configured)")
+                                Text(L10n.AIVisual.notConfiguredShort)
                                     .foregroundStyle(.secondary)
                             }
                         }
@@ -183,10 +183,10 @@ public struct AIVisualSettingsView: View {
 
     private var apiProviderUnconfiguredGuide: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("This provider requires an API key to generate images.")
+            Text(L10n.AIVisual.providerRequiresAPIKey)
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            Button("Configure") {
+            Button(L10n.AIVisual.configure) {
                 model.openProviderConfig()
             }
             .buttonStyle(.borderedProminent)
@@ -196,11 +196,11 @@ public struct AIVisualSettingsView: View {
 
     private var mmxSetupGuide: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Setup Guide")
+            Text(L10n.AIVisual.setupGuide)
                 .font(.caption.weight(.medium))
-            guidanceRow(icon: "arrow.down.circle", text: "Install: `brew install minimax/tap/mmx` or download from minimax.ai")
-            guidanceRow(icon: "person.badge.key", text: "Log in: run `mmx auth login` in your command line")
-            guidanceRow(icon: "arrow.clockwise", text: "Click \"Check Status\" after installing or logging in")
+            guidanceRow(icon: "arrow.down.circle", text: L10n.AIVisual.installGuide)
+            guidanceRow(icon: "person.badge.key", text: L10n.AIVisual.loginGuide)
+            guidanceRow(icon: "arrow.clockwise", text: L10n.AIVisual.refreshGuide)
         }
         .padding(8)
         .background(Color(nsColor: .controlBackgroundColor))
@@ -210,7 +210,7 @@ public struct AIVisualSettingsView: View {
     private var mmxPathRow: some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack(spacing: 8) {
-                TextField("mmx path (optional)", text: $model.mmxPath, prompt: Text(model.detectedMMXPathPlaceholder))
+                TextField(L10n.AIVisual.mmxPathPlaceholder, text: $model.mmxPath, prompt: Text(model.detectedMMXPathPlaceholder))
                     .textFieldStyle(.roundedBorder)
                     .font(.caption)
                     .onSubmit { model.commitMmxPath() }
@@ -222,7 +222,7 @@ public struct AIVisualSettingsView: View {
                         ProgressView()
                             .controlSize(.small)
                     } else {
-                        Text("Check Status")
+                        Text(L10n.AIVisual.checkStatus)
                     }
                 }
                 .buttonStyle(.bordered)
@@ -251,24 +251,24 @@ public struct AIVisualSettingsView: View {
 
     private var usageSection: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Daily Usage")
+            Text(L10n.AIVisual.dailyUsage)
                 .font(.subheadline.weight(.medium))
             HStack(spacing: 16) {
-                LabeledContent("Today", value: model.dailyUsedText)
+                LabeledContent(L10n.AIVisual.today, value: model.dailyUsedText)
                     .font(.caption)
-                LabeledContent("Remaining", value: model.dailyRemainingText)
+                LabeledContent(L10n.AIVisual.remaining, value: model.dailyRemainingText)
                     .font(.caption)
             }
-            LabeledContent("This Month", value: model.monthlyUsedText)
+            LabeledContent(L10n.AIVisual.thisMonth, value: model.monthlyUsedText)
                 .font(.caption)
         }
     }
 
     private var frequencySection: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Autonomous Frequency")
+            Text(L10n.AIVisual.autonomousFrequency)
                 .font(.subheadline.weight(.medium))
-            Picker("Frequency", selection: Binding(
+            Picker(L10n.AIVisual.autonomousFrequency, selection: Binding(
                 get: { model.preferences.autonomousFrequency },
                 set: { model.setAutonomousFrequency($0) }
             )) {
@@ -286,9 +286,9 @@ public struct AIVisualSettingsView: View {
 
     private var durationSection: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Change Duration")
+            Text(L10n.AIVisual.changeDuration)
                 .font(.subheadline.weight(.medium))
-            Picker("Duration", selection: Binding(
+            Picker(L10n.AIVisual.changeDuration, selection: Binding(
                 get: { model.preferences.durationPreset },
                 set: { model.setDurationPreset($0) }
             )) {
@@ -302,9 +302,9 @@ public struct AIVisualSettingsView: View {
 
     private var intensitySection: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Change Intensity")
+            Text(L10n.AIVisual.changeIntensity)
                 .font(.subheadline.weight(.medium))
-            Picker("Intensity", selection: Binding(
+            Picker(L10n.AIVisual.changeIntensity, selection: Binding(
                 get: { model.preferences.intensity },
                 set: { model.setIntensity($0) }
             )) {
@@ -318,10 +318,10 @@ public struct AIVisualSettingsView: View {
 
     private var consistencySection: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("一致性偏好")
+            Text(L10n.AIVisual.consistencyPreference)
                 .font(.subheadline.weight(.medium))
 
-            Picker("一致性偏好", selection: Binding(
+            Picker(L10n.AIVisual.consistencyPreference, selection: Binding(
                 get: { model.consistencyPreference },
                 set: { model.setConsistencyPreference($0) }
             )) {
@@ -346,17 +346,17 @@ public struct AIVisualSettingsView: View {
             }
 
             VStack(alignment: .leading, spacing: 3) {
-                Text("形象备注")
+                Text(L10n.AIVisual.visualNotes)
                     .font(.caption.weight(.medium))
                 TextField(
-                    "粉白色小狐狸，2D 插画风，不要 3D",
+                    L10n.AIVisual.visualNotesPlaceholder,
                     text: Binding(
                         get: { model.petVisualNotes },
                         set: { model.setPetVisualNotes($0) }
                     )
                 )
                 .textFieldStyle(.roundedBorder)
-                Text("可选；会用于下一次生成。")
+                Text(L10n.AIVisual.visualNotesHint)
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
@@ -366,9 +366,9 @@ public struct AIVisualSettingsView: View {
     private var manualGenerationSection: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text("Manual Generation")
+                Text(L10n.AIVisual.manualGeneration)
                     .font(.subheadline.weight(.medium))
-                Text("Create a fresh visual change now.")
+                Text(L10n.AIVisual.manualGenerationHint)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -376,7 +376,7 @@ public struct AIVisualSettingsView: View {
             Button {
                 model.requestManualGeneration()
             } label: {
-                Label("Generate Now", systemImage: "sparkles")
+                Label(L10n.AIVisual.generateNow, systemImage: "sparkles")
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.small)
@@ -386,13 +386,13 @@ public struct AIVisualSettingsView: View {
     private var restoreSection: some View {
         HStack {
             if model.hasActiveOverlay {
-                Button("Restore Original Look", role: .destructive) {
+                Button(L10n.AIVisual.restoreOriginalLook, role: .destructive) {
                     model.restoreVisual()
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
             } else {
-                Text("No active visual change")
+                Text(L10n.AIVisual.noActiveChange)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -419,29 +419,29 @@ public struct AIVisualSettingsView: View {
 
     private var enableNoticeSheet: some View {
         VStack(spacing: 16) {
-            Text("Before Enabling AI Visual Expression")
+            Text(L10n.AIVisual.beforeEnabling)
                 .font(.headline)
 
             VStack(alignment: .leading, spacing: 8) {
-                noticeRow(icon: "paintbrush", text: "AI may create temporary visual changes based on your conversation.")
-                noticeRow(icon: "hourglass", text: "Changes may take a few seconds to generate. You can continue chatting while waiting.")
-                noticeRow(icon: "xmark.circle", text: "Changes may fail. If so, your pet stays the same and a brief message is shown.")
-                noticeRow(icon: "number.circle", text: "Changes count toward a daily quota. You can see remaining uses in settings.")
-                noticeRow(icon: "arrow.uturn.backward", text: "All changes are temporary and auto-revert. You can also restore immediately.")
-                noticeRow(icon: "hand.raised", text: "This feature does not read your screen, camera, microphone, or other apps.")
-                noticeRow(icon: "eye.slash", text: "You can disable this feature at any time from this settings page.")
+                noticeRow(icon: "paintbrush", text: L10n.AIVisual.noticeVisual)
+                noticeRow(icon: "hourglass", text: L10n.AIVisual.noticeDelay)
+                noticeRow(icon: "xmark.circle", text: L10n.AIVisual.noticeFail)
+                noticeRow(icon: "number.circle", text: L10n.AIVisual.noticeQuota)
+                noticeRow(icon: "arrow.uturn.backward", text: L10n.AIVisual.noticeRevert)
+                noticeRow(icon: "hand.raised", text: L10n.AIVisual.noticePrivacy)
+                noticeRow(icon: "eye.slash", text: L10n.AIVisual.noticeDisable)
             }
             .padding()
             .background(Color(nsColor: .controlBackgroundColor))
             .clipShape(RoundedRectangle(cornerRadius: 8))
 
             HStack(spacing: 16) {
-                Button("Cancel") {
+                Button(L10n.Common.cancel) {
                     model.showEnableNotice = false
                 }
                 .keyboardShortcut(.cancelAction)
 
-                Button("I Understand, Enable") {
+                Button(L10n.AIVisual.iUnderstandEnable) {
                     model.confirmEnable()
                 }
                 .buttonStyle(.borderedProminent)
@@ -465,14 +465,14 @@ public struct AIVisualSettingsView: View {
     private var historySection: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text("History & Favorites")
+                Text(L10n.AIVisual.historyFavorites)
                     .font(.subheadline.weight(.medium))
-                Text("View and manage visual change history")
+                Text(L10n.AIVisual.viewHistoryHint)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
             Spacer()
-            Button("View History") {
+            Button(L10n.AIVisual.viewHistory) {
                 model.showHistory = true
             }
             .buttonStyle(.bordered)
@@ -482,9 +482,9 @@ public struct AIVisualSettingsView: View {
 
     private var frequencyDescription: String {
         switch model.preferences.autonomousFrequency {
-        case .off: "AI will not create visual changes on its own."
-        case .low: "AI may suggest visual changes occasionally (at least 30 min apart)."
-        case .medium: "AI may suggest visual changes more often (at least 10 min apart)."
+        case .off: return L10n.AIVisual.frequencyOffHint
+        case .low: return L10n.AIVisual.frequencyLowHint
+        case .medium: return L10n.AIVisual.frequencyMediumHint
         }
     }
 
@@ -495,7 +495,7 @@ public struct AIVisualSettingsView: View {
 
             VStack(alignment: .leading, spacing: 8) {
                 if model.requiresAPIKey {
-                    LabeledContent("API Key") {
+                    LabeledContent(L10n.AIVisual.apiKey) {
                         SecureField("sk-...", text: $model.apiKeyInput)
                             .textFieldStyle(.roundedBorder)
                             .frame(width: 260)
@@ -503,12 +503,12 @@ public struct AIVisualSettingsView: View {
                 }
 
                 if model.requiresTencentCredentials {
-                    LabeledContent("Secret ID") {
+                    LabeledContent(L10n.AIVisual.secretId) {
                         SecureField("SecretId", text: $model.secretIdInput)
                             .textFieldStyle(.roundedBorder)
                             .frame(width: 260)
                     }
-                    LabeledContent("Secret Key") {
+                    LabeledContent(L10n.AIVisual.secretKey) {
                         SecureField("SecretKey", text: $model.secretKeyInput)
                             .textFieldStyle(.roundedBorder)
                             .frame(width: 260)
@@ -516,7 +516,7 @@ public struct AIVisualSettingsView: View {
                 }
 
                 if model.requiresBaseURL {
-                    LabeledContent("Base URL") {
+                    LabeledContent(L10n.AIVisual.baseURL) {
                         TextField("https://api.openai.com", text: $model.baseURLInput)
                             .textFieldStyle(.roundedBorder)
                             .frame(width: 260)
@@ -524,7 +524,7 @@ public struct AIVisualSettingsView: View {
                 }
 
                 if model.requiresModel {
-                    LabeledContent("Model") {
+                    LabeledContent(L10n.AIVisual.model) {
                         TextField("model name", text: $model.modelInput)
                             .textFieldStyle(.roundedBorder)
                             .frame(width: 200)
@@ -532,7 +532,7 @@ public struct AIVisualSettingsView: View {
                 }
 
                 if model.requiresRegion {
-                    LabeledContent("Region") {
+                    LabeledContent(L10n.AIVisual.region) {
                         TextField("region", text: $model.regionInput)
                             .textFieldStyle(.roundedBorder)
                             .frame(width: 160)
@@ -541,12 +541,12 @@ public struct AIVisualSettingsView: View {
             }
 
             HStack(spacing: 16) {
-                Button("Cancel") {
+                Button(L10n.Common.cancel) {
                     model.showProviderConfig = false
                 }
                 .keyboardShortcut(.cancelAction)
 
-                Button("Save") {
+                Button(L10n.Common.save) {
                     model.saveProviderConfig()
                 }
                 .buttonStyle(.borderedProminent)

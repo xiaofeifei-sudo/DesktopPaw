@@ -1,16 +1,24 @@
 import AppKit
 import SwiftUI
 
+// MARK: - 核心协议定义
+
+/// 宠物窗口控制协议
+/// 负责宠物悬浮窗的显示/隐藏/位置管理
 @MainActor
 public protocol PetWindowControlling: AnyObject {
+    /// 宠物当前是否可见
     var isPetVisible: Bool { get }
 
     func showPet()
     func hidePet()
     func resetPosition()
+    /// 退出前保存窗口状态
     func saveStateBeforeQuit()
 }
 
+/// 宠物命令处理协议
+/// 封装 PetEngine 的操作接口，供 AppCoordinator 调用
 @MainActor
 public protocol PetCommandHandling: AnyObject {
     var isSleeping: Bool { get }
@@ -27,9 +35,11 @@ public protocol PetCommandHandling: AnyObject {
     func playAction(_ id: ActionId)
     func setScale(_ scale: Double)
     func setRandomWalkingEnabled(_ enabled: Bool)
+    /// 引擎 tick，驱动状态更新
     func tick(at date: Date)
 }
 
+/// 宠物图库命令协议
 @MainActor
 public protocol PetLibraryCommanding: AnyObject {
     func importPetImage(at url: URL, displayName: String)
@@ -41,6 +51,8 @@ public protocol PetLibraryCommanding: AnyObject {
     func deletePet(id: String)
 }
 
+/// 气泡命令协议
+/// 统一气泡引擎触发入口，支持基础事件和 AI 陪伴事件
 @MainActor
 public protocol BubbleCommanding: AnyObject {
     func setSpeechBubbleEnabled(_ enabled: Bool)
@@ -52,23 +64,38 @@ public protocol BubbleCommanding: AnyObject {
     var currentBubble: PetBubble? { get }
 }
 
+/// 设置窗口控制协议
 @MainActor
 public protocol SettingsWindowControlling: AnyObject {
     func showSettings()
 }
 
+/// 开机自启控制协议
 @MainActor
 public protocol LaunchAtLoginControlling: AnyObject {
     var isLaunchAtLoginEnabled: Bool { get }
-
     func setLaunchAtLoginEnabled(_ enabled: Bool)
 }
 
+/// 应用退出协议
 @MainActor
 public protocol ApplicationTerminating: AnyObject {
     func terminate()
 }
 
+/// 应用协调器 —— 整个应用的命令路由中枢
+///
+/// 采用协调器模式（Coordinator Pattern），所有用户操作通过 AppCommand 枚举汇入，
+/// 由 handle(_:) 方法统一分发到各子系统：
+/// - 宠物窗口（显示/隐藏/拖拽）
+/// - 宠物引擎（点击/抚摸/喂食/睡觉/动作）
+/// - 气泡系统（基础气泡 + AI 陪伴气泡）
+/// - 设置面板
+/// - 图库管理
+/// - AI 聊天与记忆
+/// - 内容包管理
+///
+/// 同时通过 menuState 属性向外暴露菜单栏所需的当前状态快照。
 @MainActor
 public final class AppCoordinator {
     private let petWindow: PetWindowControlling
@@ -88,12 +115,15 @@ public final class AppCoordinator {
     private let aiMemoryStore: AIMemoryStoring?
     private let contentPackManager: ContentPackManaging?
     private let onContentPacksChanged: (() -> Void)?
+    private let languageManager: LanguageManager?
     private let now: () -> Date
     private var actionNotice: String?
     private var isSpeechBubbleEnabled: Bool = true
     private var isQuietModeActive: Bool = false
 
     public var onQuietModeStateChanged: ((Bool) -> Void)?
+
+    // MARK: - 初始化
 
     public init(
         petWindow: PetWindowControlling,
@@ -114,6 +144,7 @@ public final class AppCoordinator {
         contentPackManager: ContentPackManaging? = nil,
         onContentPacksChanged: (() -> Void)? = nil,
         speechBubbleEnabled: Bool = true,
+        languageManager: LanguageManager? = nil,
         now: @escaping () -> Date = { Date() }
     ) {
         self.petWindow = petWindow
@@ -134,8 +165,10 @@ public final class AppCoordinator {
         self.contentPackManager = contentPackManager
         self.onContentPacksChanged = onContentPacksChanged
         self.isSpeechBubbleEnabled = speechBubbleEnabled
+        self.languageManager = languageManager
         self.now = now
 
+        // 包装 actionTriggerService 的拒绝回调，追加菜单栏提示逻辑
         let previousRejectionHandler = self.actionTriggerService.onTriggerRejected
         self.actionTriggerService.onTriggerRejected = { [weak self] actionId, eligibility in
             previousRejectionHandler?(actionId, eligibility)
@@ -143,6 +176,9 @@ public final class AppCoordinator {
         }
     }
 
+    // MARK: - 公共属性
+
+    /// 菜单栏所需的当前状态快照
     public var menuState: AppMenuState {
         AppMenuState(
             isPetVisible: petWindow.isPetVisible,
@@ -154,20 +190,26 @@ public final class AppCoordinator {
         )
     }
 
+    /// 当前动作目录
     public var actionCatalog: PetActionCatalog {
         actionCatalogProvider()
     }
 
+    // MARK: - 公共方法
+
+    /// 查询动作触发资格
     public func eligibility(for actionId: ActionId) -> ActionTriggerEligibility {
         actionTriggerService.eligibility(for: actionId)
     }
 
+    /// 启动协调器
     public func start() {
         if petWindow.isPetVisible {
             petWindow.showPet()
         }
     }
 
+    /// 核心命令路由 —— 将 AppCommand 分发到相应子系统
     public func handle(_ command: AppCommand) {
         switch command {
         case .showPet:
@@ -175,21 +217,25 @@ public final class AppCoordinator {
         case .hidePet:
             petWindow.hidePet()
         case .clicked:
+            // 点击：播放动画 + 音效 + AI 陪伴事件 + 气泡
             petCommands.clicked()
             soundPlayer.play(.click)
             companionRouter?.handle(.directInteraction(.click, now()), runtimeState: petCommands.runtimeState)
             emitBubble(trigger: .clicked, event: .clicked)
         case .pet:
+            // 抚摸
             petCommands.pet()
             soundPlayer.play(.pet)
             companionRouter?.handle(.directInteraction(.pet, now()), runtimeState: petCommands.runtimeState)
             emitBubble(trigger: .pet, event: .pet)
         case .feed:
+            // 喂食
             petCommands.feed()
             soundPlayer.play(.feed)
             companionRouter?.handle(.directInteraction(.feed, now()), runtimeState: petCommands.runtimeState)
             emitBubble(trigger: .feed, event: .feed)
         case .sleepOrWake:
+            // 睡觉/唤醒切换
             if petCommands.isSleeping {
                 petCommands.wake()
                 companionRouter?.handle(.wakeRequested(now()), runtimeState: petCommands.runtimeState)
@@ -213,6 +259,7 @@ public final class AppCoordinator {
         case .quit:
             prepareForTermination()
             application.terminate()
+        // MARK: 图库命令
         case .importPetImage(let url, let displayName):
             library?.importPetImage(at: url, displayName: displayName)
         case .importPetPackage(let url):
@@ -227,6 +274,7 @@ public final class AppCoordinator {
             library?.selectPet(id: id)
         case .deletePet(let id):
             library?.deletePet(id: id)
+        // MARK: 气泡命令
         case .setBubbleFrequency(let frequency):
             bubble?.setBubbleFrequency(frequency)
         case .setSpeechBubbleEnabled(let enabled):
@@ -234,12 +282,15 @@ public final class AppCoordinator {
             bubble?.setSpeechBubbleEnabled(enabled)
         case .setRelationshipPromptsEnabled:
             break
+        // MARK: 静音模式
         case .quietForOneHour:
             handleQuietForOneHour()
         case .clearQuietMode:
             handleClearQuietMode()
+        // MARK: 迷你对话
         case .selectMicroDialogOption(let optionId):
             handleMicroDialogOption(optionId)
+        // MARK: AI 聊天
         case .openChatPanel(let petId):
             chatPanel?.showChatPanel(petId: petId)
         case .closeChatPanel:
@@ -254,16 +305,19 @@ public final class AppCoordinator {
             if !enabled {
                 chatPanel?.closeChatPanel()
             }
+        // MARK: AI 记忆
         case .clearAIMemory(let petId):
             try? aiMemoryStore?.clearAll(petId: petId)
         case .exportAIMemory(let petId):
             _ = try? aiMemoryStore?.exportMemories(petId: petId)
         case .deleteAIMemory(let memoryId, let petId):
             try? aiMemoryStore?.delete(memoryId: memoryId, petId: petId)
+        // MARK: AI 偏好
         case .updateAIPreferences(let preferences):
             aiPreferencesStore?.savePreferences(preferences)
         case .selectPersonality(let profileId):
             aiPreferencesStore?.setSelectedPersonalityId(profileId)
+        // MARK: 内容包管理
         case .importContentPack(let url):
             mutateContentPacks {
                 _ = try $0.importPack(from: url)
@@ -284,28 +338,37 @@ public final class AppCoordinator {
             mutateContentPacks {
                 try $0.restoreDefaultContent()
             }
+        case .setAppLanguage(let language):
+            languageManager?.currentLanguage = language
         }
     }
 
+    /// 引擎 tick（由 PetEngineTimer 定时驱动，约 16ms 一次）
     public func tick(at date: Date) {
         petCommands.tick(at: date)
         bubble?.handleTick(state: petCommands.runtimeState, at: date)
     }
 
+    /// 退出前保存窗口状态
     public func prepareForTermination() {
         petWindow.saveStateBeforeQuit()
     }
 
+    // MARK: - 私有方法
+
+    /// 开启静音一小时（抑制所有气泡）
     private func handleQuietForOneHour() {
         isQuietModeActive = true
         onQuietModeStateChanged?(true)
     }
 
+    /// 清除静音模式
     private func handleClearQuietMode() {
         isQuietModeActive = false
         onQuietModeStateChanged?(false)
     }
 
+    /// 记录动作触发结果，用于菜单栏显示提示文案
     private func recordActionTriggerResult(_ result: ActionTriggerEligibility) {
         switch result {
         case .allowed:
@@ -319,6 +382,7 @@ public final class AppCoordinator {
         }
     }
 
+    /// 安全地修改内容包（带错误处理）
     private func mutateContentPacks(_ mutation: (ContentPackManaging) throws -> Void) {
         guard let contentPackManager else { return }
         do {
@@ -329,6 +393,7 @@ public final class AppCoordinator {
         }
     }
 
+    /// 根据触发类型发出气泡（优先走 AI 陪伴，否则走基础事件）
     private func emitBubble(trigger: BubbleTrigger, event: PetEvent) {
         let state = petCommands.runtimeState
         let date = now()
@@ -339,6 +404,7 @@ public final class AppCoordinator {
         }
     }
 
+    /// 处理迷你对话选项：解析命令 → 通知路由 → 执行对应操作
     private func handleMicroDialogOption(_ optionId: MicroDialogOptionId) {
         guard let service = microDialogService else { return }
         let command = service.command(for: optionId, now: now())
@@ -367,6 +433,10 @@ public final class AppCoordinator {
     }
 }
 
+/// 可切换的宠物命令处理器
+///
+/// 包装 PetEngineCommandHandler，支持在运行时替换底层引擎实例。
+/// 主要用于宠物切换场景：当用户选择不同宠物时，创建新的 PetEngine 并替换。
 @MainActor
 final class SwitchablePetCommandHandler: PetCommandHandling {
     private var current: PetEngineCommandHandler {
@@ -469,6 +539,7 @@ final class SwitchablePetCommandHandler: PetCommandHandling {
     }
 }
 
+/// NSApplication 退出适配器
 @MainActor
 final class NSApplicationTerminator: ApplicationTerminating {
     func terminate() {
@@ -476,6 +547,17 @@ final class NSApplicationTerminator: ApplicationTerminating {
     }
 }
 
+/// 应用依赖注入容器
+///
+/// 这是整个应用的「组装工厂」，在 init() 中完成所有服务的创建和依赖注入：
+/// - 宠物引擎 & 渲染器
+/// - 气泡引擎 & 迷你对话
+/// - AI 聊天 & 记忆 & 情绪追踪
+/// - AI 视觉生成（多提供商注册）
+/// - 定时器 & 窗口
+/// - 所有回调链的绑定
+///
+/// 遵循手动 DI 模式，不使用任何 DI 框架，所有依赖关系显式可见。
 @MainActor
 final class AppDependencyContainer {
     let petWindow: PetWindowController
@@ -535,6 +617,9 @@ final class AppDependencyContainer {
     private var interactiveBubbleRecentTexts: [String] = []
 
     init() {
+        // ==========================================
+        // 第 1 层：基础服务（存储、导入、偏好）
+        // ==========================================
         let store = PetLibraryStore()
         let importer = PetImageImporter()
         let packageImporter = PetPackageImporter()
@@ -560,6 +645,9 @@ final class AppDependencyContainer {
             definition = (try? BuiltInPetDefinitionProvider().loadBuiltInPet()) ?? Self.fallbackDefinition()
         }
 
+        // ==========================================
+        // 第 2 层：宠物引擎 & 动作触发
+        // ==========================================
         let contentPackManager = ContentPackManager()
         let initialActionCatalog = contentPackManager.enabledActionCatalog(merging: definition.catalog)
         let initialState = preferencesStore.loadRuntimeState()

@@ -11,4 +11,5 @@ public enum PreferenceKeys {
     public static let hunger = "hunger"
     public static let energy = "energy"
     public static let lastInteractionAt = "lastInteractionAt"
+    public static let appLanguage = "appLanguage"
 }

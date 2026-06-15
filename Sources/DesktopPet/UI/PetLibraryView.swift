@@ -2,13 +2,13 @@ import SwiftUI
 
 @MainActor
 public struct PetLibraryView: View {
-  public static let importImageButtonTitle = "Import Image"
-  public static let importPackageButtonTitle = "Import Package"
-  public static let importPetdexZipButtonTitle = "Import Petdex Zip"
-  public static let importPetdexURLButtonTitle = "Import from Petdex URL"
-  public static let cancelPetdexURLButtonTitle = "Cancel"
+  public static let importImageButtonTitle = L10n.PetLibrary.importImage
+  public static let importPackageButtonTitle = L10n.PetLibrary.importPackage
+  public static let importPetdexZipButtonTitle = L10n.PetLibrary.importPetdexZip
+  public static let importPetdexURLButtonTitle = L10n.PetLibrary.importPetdexURL
+  public static let cancelPetdexURLButtonTitle = L10n.Common.cancel
   public static let petdexURLPlaceholder = "https://petdex.crafter.run/..."
-  public static let importingMessage = "Importing..."
+  public static let importingMessage = L10n.PetLibrary.importing
 
   @ObservedObject private var libraryModel: PetLibraryViewModel
   @ObservedObject private var importModel: PetImportViewModel
@@ -55,7 +55,7 @@ public struct PetLibraryView: View {
 
   private var header: some View {
     HStack {
-      Text("Pet Library")
+      Text(L10n.PetLibrary.title)
         .font(.headline)
       Spacer()
       if let currentId = libraryModel.currentPetId,
@@ -69,7 +69,7 @@ public struct PetLibraryView: View {
   private var petList: some View {
     VStack(alignment: .leading, spacing: 8) {
       if libraryModel.items.isEmpty {
-        Text("No pets yet. Import an image or package to add one.")
+        Text(L10n.PetLibrary.noPets)
           .foregroundStyle(.secondary)
       } else {
         ForEach(libraryModel.items, id: \.id) { item in
@@ -161,7 +161,7 @@ private struct PetLibraryRow: View {
       }
       Spacer()
       if isCurrent {
-        Text("In Use")
+        Text(L10n.localize(cn: "使用中", en: "In Use"))
           .foregroundStyle(.secondary)
           .font(.caption)
       } else {

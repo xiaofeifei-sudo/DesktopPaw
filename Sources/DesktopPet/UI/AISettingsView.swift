@@ -44,20 +44,20 @@ public struct AISettingsView: View {
     private var aiToggleSection: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text("AI Companion")
+                Text(L10n.AI.title)
                     .font(.headline)
-                Text("AI features are off by default. Enable to chat with your pet.")
+                Text(L10n.AI.aiOffWarning)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
             Spacer()
             if model.isAIEnabled {
-                Button("Disable AI", role: .destructive) {
+                Button(L10n.AI.disableAI, role: .destructive) {
                     model.disableAI()
                 }
                 .buttonStyle(.bordered)
             } else {
-                Button("Enable AI") {
+                Button(L10n.AI.enableAI) {
                     model.requestEnableAI()
                 }
                 .buttonStyle(.borderedProminent)
@@ -67,22 +67,22 @@ public struct AISettingsView: View {
 
     private var providerSection: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("AI Provider")
+            Text(L10n.AI.aiProvider)
                 .font(.subheadline.weight(.medium))
             HStack {
                 if model.isConfigured {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.green)
-                    Text("Configured")
+                    Text(L10n.AI.configured)
                         .font(.caption)
                 } else {
                     Image(systemName: "exclamationmark.circle.fill")
                         .foregroundStyle(.orange)
-                    Text("Not configured — set up API key to start chatting")
+                    Text(L10n.AI.notConfigured)
                         .font(.caption)
                 }
                 Spacer()
-                Button("Configure") {
+                Button(L10n.AI.configure) {
                     model.openProviderConfig()
                 }
                 .buttonStyle(.bordered)
@@ -93,10 +93,10 @@ public struct AISettingsView: View {
 
     private var personalitySection: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Personality")
+            Text(L10n.AI.personality)
                 .font(.subheadline.weight(.medium))
 
-            Picker("Personality", selection: Binding(
+            Picker(L10n.AI.personality, selection: Binding(
                 get: { model.preferences.selectedPersonalityId },
                 set: { model.setPersonality($0) }
             )) {
@@ -124,14 +124,14 @@ public struct AISettingsView: View {
     }
 
     private var initiativeBubbleSection: some View {
-        Toggle("Allow AI initiative bubbles", isOn: Binding(
+        Toggle(L10n.AI.allowInitiativeBubbles, isOn: Binding(
             get: { model.preferences.allowInitiativeBubble },
             set: { model.setAllowInitiativeBubble($0) }
         ))
     }
 
     private var memoryToggleSection: some View {
-        Toggle("Memory", isOn: Binding(
+        Toggle(L10n.AI.memory, isOn: Binding(
             get: { model.preferences.isMemoryEnabled },
             set: { model.setMemoryEnabled($0) }
         ))
@@ -139,19 +139,19 @@ public struct AISettingsView: View {
 
     private var memoryActionsSection: some View {
         HStack(spacing: 12) {
-            Button("View & Manage Memory") {
+            Button(L10n.AI.viewManageMemory) {
                 model.openMemoryManager()
             }
             .buttonStyle(.bordered)
             .controlSize(.small)
 
-            Button("Export Memory") {
+            Button(L10n.AI.exportMemory) {
                 model.exportMemory()
             }
             .buttonStyle(.bordered)
             .controlSize(.small)
 
-            Button("Clear All Memory", role: .destructive) {
+            Button(L10n.AI.clearAllMemory, role: .destructive) {
                 model.clearMemory()
             }
             .buttonStyle(.bordered)
@@ -161,27 +161,27 @@ public struct AISettingsView: View {
 
     private var privacyNoticeSheet: some View {
         VStack(spacing: 16) {
-            Text("Before Enabling AI")
+            Text(L10n.AI.beforeEnablingAI)
                 .font(.headline)
 
             VStack(alignment: .leading, spacing: 8) {
-                privacyRow(icon: "text.bubble", text: "AI will process the text messages you send to your pet.")
-                privacyRow(icon: "brain", text: "AI may use memory to remember your preferences and nicknames (if enabled).")
-                privacyRow(icon: "xmark.circle", text: "You can disable AI at any time from this settings page.")
-                privacyRow(icon: "trash", text: "You can view, edit, and clear all AI memory at any time.")
-                privacyRow(icon: "exclamationmark.triangle", text: "AI cannot replace professional medical, legal, or financial advice.")
+                privacyRow(icon: "text.bubble", text: L10n.AI.privacyProcessing)
+                privacyRow(icon: "brain", text: L10n.AI.privacyMemory)
+                privacyRow(icon: "xmark.circle", text: L10n.AI.privacyDisable)
+                privacyRow(icon: "trash", text: L10n.AI.privacyManage)
+                privacyRow(icon: "exclamationmark.triangle", text: L10n.AI.privacyDisclaimer)
             }
             .padding()
             .background(Color(nsColor: .controlBackgroundColor))
             .clipShape(RoundedRectangle(cornerRadius: 8))
 
             HStack(spacing: 16) {
-                Button("Cancel") {
+                Button(L10n.Common.cancel) {
                     model.showPrivacyNotice = false
                 }
                 .keyboardShortcut(.cancelAction)
 
-                Button("I Understand, Enable AI") {
+                Button(L10n.AI.iUnderstand) {
                     model.confirmEnableAI()
                 }
                 .buttonStyle(.borderedProminent)
@@ -194,21 +194,21 @@ public struct AISettingsView: View {
 
     private var providerConfigSheet: some View {
         VStack(spacing: 16) {
-            Text("Configure AI Provider")
+            Text(L10n.AI.configureAIProvider)
                 .font(.headline)
 
             VStack(alignment: .leading, spacing: 8) {
-                LabeledContent("Protocol") {
+                LabeledContent(L10n.AI.protocol_) {
                     Picker("", selection: $model.selectedProtocol) {
                         ForEach(AIProviderProtocol.allCases, id: \.self) { proto in
-                            Text(proto == .openai ? "OpenAI" : "Anthropic").tag(proto)
+                            Text(proto == .openai ? L10n.AI.openAI : L10n.AI.anthropic).tag(proto)
                         }
                     }
                     .pickerStyle(.segmented)
                     .frame(width: 200)
                 }
 
-                LabeledContent("API Endpoint") {
+                LabeledContent(L10n.AI.apiEndpoint) {
                     TextField(
                         model.selectedProtocol == .anthropic
                             ? "https://api.anthropic.com"
@@ -218,7 +218,7 @@ public struct AISettingsView: View {
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 260)
                 }
-                LabeledContent("Model") {
+                LabeledContent(L10n.AI.model) {
                     TextField(
                         model.selectedProtocol == .anthropic ? "claude-sonnet-4-20250514" : "gpt-4o-mini",
                         text: $model.modelInput
@@ -226,7 +226,7 @@ public struct AISettingsView: View {
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 160)
                 }
-                LabeledContent("API Key") {
+                LabeledContent(L10n.AI.apiKey) {
                     SecureField("sk-...", text: $model.apiKeyInput)
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 260)
@@ -234,12 +234,12 @@ public struct AISettingsView: View {
             }
 
             HStack(spacing: 16) {
-                Button("Cancel") {
+                Button(L10n.Common.cancel) {
                     model.showProviderConfig = false
                 }
                 .keyboardShortcut(.cancelAction)
 
-                Button("Save") {
+                Button(L10n.Common.save) {
                     model.saveProviderConfig()
                 }
                 .buttonStyle(.borderedProminent)

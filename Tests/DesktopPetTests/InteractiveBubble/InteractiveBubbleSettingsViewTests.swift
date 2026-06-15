@@ -31,9 +31,9 @@ private struct InteractiveBubbleSettingsViewTests {
 
         expect(model.shouldShowAIGuidance,
                "interactive bubble settings should show AI guidance when AI is not configured")
-        expect(InteractiveBubbleSettingsView.aiGuidanceMessage == "Smart bubbles need AI support. Configure a model and API key in AI Settings first.",
+        expect(L10n.SmartBubble.aiGuidance == "Smart bubbles need AI support. Configure a model and API key in AI Settings first.",
                "AI guidance copy should explain the required model and API key setup")
-        expect(InteractiveBubbleSettingsView.aiSettingsButtonTitle == "Open AI Settings",
+        expect(L10n.SmartBubble.openAISettings == "Open AI Settings",
                "AI guidance should expose a shortcut to AI settings")
     }
 

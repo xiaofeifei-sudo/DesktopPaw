@@ -11,7 +11,7 @@ public struct PetBubbleSettingsView: View {
   public var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       Toggle(
-        "Show speech bubbles",
+        L10n.Bubble.showSpeechBubbles,
         isOn: Binding(
           get: { model.isSpeechBubbleEnabled },
           set: { model.setSpeechBubbleEnabled($0) }
@@ -19,7 +19,7 @@ public struct PetBubbleSettingsView: View {
       )
 
       Picker(
-        "Bubble Frequency",
+        L10n.Bubble.frequency,
         selection: Binding(
           get: { model.bubbleFrequency },
           set: { model.setBubbleFrequency($0) }
@@ -36,9 +36,9 @@ public struct PetBubbleSettingsView: View {
 
   private func label(for frequency: BubbleFrequency) -> String {
     switch frequency {
-    case .quiet: "Quiet"
-    case .normal: "Normal"
-    case .expressive: "Expressive"
+    case .quiet: return L10n.Bubble.frequencyQuiet
+    case .normal: return L10n.Bubble.frequencyNormal
+    case .expressive: return L10n.Bubble.frequencyExpressive
     }
   }
 }

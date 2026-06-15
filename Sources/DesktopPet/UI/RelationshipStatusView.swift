@@ -11,7 +11,7 @@ public struct RelationshipStatusView: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text("Relationship")
+                Text(L10n.Companionship.relationship)
                     .font(.headline)
                 Spacer()
                 Text(model.levelDisplayText)

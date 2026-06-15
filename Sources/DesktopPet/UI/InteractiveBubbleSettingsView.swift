@@ -52,7 +52,7 @@ public final class InteractiveBubbleSettingsViewModel: ObservableObject {
     }
 
     public var advancedSettingsButtonTitle: String {
-        isAdvancedMode ? "Hide Advanced Settings" : "Advanced Settings"
+        isAdvancedMode ? L10n.SmartBubble.hideAdvancedSettings : L10n.SmartBubble.advancedSettings
     }
 
     public var silentPeriodStartHour: Int {
@@ -174,9 +174,6 @@ public final class InteractiveBubbleSettingsViewModel: ObservableObject {
 
 @MainActor
 public struct InteractiveBubbleSettingsView: View {
-    public static let aiGuidanceMessage = "Smart bubbles need AI support. Configure a model and API key in AI Settings first."
-    public static let aiSettingsButtonTitle = "Open AI Settings"
-
     @ObservedObject private var model: InteractiveBubbleSettingsViewModel
 
     public init(model: InteractiveBubbleSettingsViewModel) {
@@ -212,7 +209,7 @@ public struct InteractiveBubbleSettingsView: View {
     private var basicSettings: some View {
         VStack(alignment: .leading, spacing: 8) {
             Toggle(
-                "Enable smart bubbles",
+                L10n.SmartBubble.enableSmartBubbles,
                 isOn: Binding(
                     get: { model.isEnabled },
                     set: { model.setEnabled($0) }
@@ -220,12 +217,12 @@ public struct InteractiveBubbleSettingsView: View {
             )
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("Activity")
+                Text(L10n.SmartBubble.activity)
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
                 Picker(
-                    "Activity",
+                    L10n.SmartBubble.activity,
                     selection: Binding(
                         get: { model.activityLevel },
                         set: { model.setActivityLevel($0) }
@@ -244,7 +241,7 @@ public struct InteractiveBubbleSettingsView: View {
     private var advancedSettings: some View {
         VStack(alignment: .leading, spacing: 10) {
             intervalSlider(
-                title: "Minimum Interval",
+                title: L10n.SmartBubble.minInterval,
                 valueText: "\(Int(model.minIntervalMinutes)) min",
                 value: Binding(
                     get: { model.minIntervalMinutes },
@@ -255,7 +252,7 @@ public struct InteractiveBubbleSettingsView: View {
             )
 
             intervalSlider(
-                title: "Maximum Interval",
+                title: L10n.SmartBubble.maxInterval,
                 valueText: "\(Int(model.maxIntervalMinutes)) min",
                 value: Binding(
                     get: { model.maxIntervalMinutes },
@@ -266,7 +263,7 @@ public struct InteractiveBubbleSettingsView: View {
             )
 
             intervalSlider(
-                title: "Option Wait",
+                title: L10n.SmartBubble.optionWait,
                 valueText: "\(Int(model.optionWaitDurationSeconds)) sec",
                 value: Binding(
                     get: { model.optionWaitDurationSeconds },
@@ -277,7 +274,7 @@ public struct InteractiveBubbleSettingsView: View {
             )
 
             HStack {
-                Text("Silent Period")
+                Text(L10n.SmartBubble.silentPeriod)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .frame(width: 96, alignment: .leading)
@@ -292,7 +289,7 @@ public struct InteractiveBubbleSettingsView: View {
                 )
                 .labelsHidden()
 
-                Text("to")
+                Text(L10n.SmartBubble.to)
                     .foregroundStyle(.secondary)
 
                 DatePicker(
@@ -340,12 +337,12 @@ public struct InteractiveBubbleSettingsView: View {
                 .frame(width: 18)
 
             VStack(alignment: .leading, spacing: 6) {
-                Text(Self.aiGuidanceMessage)
+                Text(L10n.SmartBubble.aiGuidance)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
 
-                Button(Self.aiSettingsButtonTitle) {
+                Button(L10n.SmartBubble.openAISettings) {
                     model.openAISettings()
                 }
                 .buttonStyle(.bordered)
@@ -359,9 +356,9 @@ public struct InteractiveBubbleSettingsView: View {
 
     private func label(for level: ActivityLevel) -> String {
         switch level {
-        case .low: "Low"
-        case .medium: "Medium"
-        case .high: "High"
+        case .low: return L10n.SmartBubble.activityLow
+        case .medium: return L10n.SmartBubble.activityMedium
+        case .high: return L10n.SmartBubble.activityHigh
         }
     }
 }

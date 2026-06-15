@@ -53,14 +53,14 @@ public final class SettingsViewModel: ObservableObject {
         }
 
         if runtimeState.mood >= 0.7 {
-            return "Happy"
+            return L10n.localize(cn: "开心", en: "Happy")
         }
 
         if runtimeState.mood < 0.35 {
-            return "Quiet"
+            return L10n.localize(cn: "安静", en: "Quiet")
         }
 
-        return "Calm"
+        return L10n.localize(cn: "平静", en: "Calm")
     }
 
     public func setPetVisible(_ isVisible: Bool) {
