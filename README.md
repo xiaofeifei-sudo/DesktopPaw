@@ -1,289 +1,289 @@
 <h1 align="center">🐾 MofuPaw · 萌爪</h1>
 <p align="center">
-  <strong>A fluffy AI desktop pet that lives on your Mac</strong>
+  <strong>一只毛茸茸的 AI 桌面宠物，住在你的 Mac 里</strong>
 </p>
 <p align="center">
-  <em>A smart, cute virtual pet powered by AI 🐱</em>
+  <em>一只聪明、可爱的 AI 电子宠物 🐱</em>
 </p>
 <p align="center">
-  <a href="README_CN.md">🇨🇳 中文文档</a> ·
-  <a href="#-what-is-mofupaw">🎮 What is MofuPaw</a> ·
-  <a href="#-features">✨ Features</a> ·
-  <a href="#-getting-started">🚀 Quick Start</a>
+  <a href="README.md">🇺🇸 English</a> ·
+  <a href="#-什么是-mofupaw">🎮 什么是 MofuPaw</a> ·
+  <a href="#-功能亮点">✨ 功能亮点</a> ·
+  <a href="#-快速开始">🚀 快速开始</a>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/macOS-13.0+-blue" alt="macOS 13.0+">
   <img src="https://img.shields.io/badge/Swift-6-orange" alt="Swift 6">
   <img src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green" alt="License: CC BY-NC-SA 4.0">
-  <img src="https://img.shields.io/badge/Version-0.1.0-purple" alt="Version 0.1.0">
+  <img src="https://img.shields.io/badge/版本-0.1.0-purple" alt="Version 0.1.0">
 </p>
 
 ---
 
-## 🎮 What is MofuPaw?
+## 🎮 什么是 MofuPaw？
 
-**MofuPaw（萌爪）** is a **native macOS desktop pet** — a tiny, animated companion that floats on your desktop, walks around, takes naps, reacts to your clicks, and even **chats with you** using AI.
+**MofuPaw（萌爪）** 是一款**原生 macOS 桌面宠物应用** —— 一只小小的动画伙伴，悬浮在你的桌面上，会四处走动、打盹小憩、对你的点击做出反应，甚至能**用 AI 和你聊天**。
 
-> *Mofu = soft and fluffy, the feeling when you pet something adorable*
-> *Paw = the little paw prints it leaves on your desktop*
+> *Mofu = 毛茸茸、软绵绵的，撸到可爱小动物时的那种手感*
+> *Paw = 它在你桌面上留下的小爪印*
 
-It's a modern **virtual pet** built from scratch for macOS with full AI capabilities. No Electron. No web wrapper. Pure Swift, pixel-perfect on every Retina display.
+这是一款用 Swift 从零为 macOS 打造的现代**电子宠物**，具备完整的 AI 能力。不用 Electron，不用网页套壳，纯原生 Swift，在每一块 Retina 屏幕上都清晰完美。
 
 <p align="center">
-  <img src="Example/精灵图.png" alt="MofuPaw Sprite Sheet" width="500">
+  <img src="Example/精灵图.png" alt="MofuPaw 精灵图" width="500">
   <br>
-  <em>The default cat sprite sheet — 7 states, 8 frames each</em>
+  <em>默认猫咪精灵图 — 7 种状态，每种 8 帧动画</em>
 </p>
 
 <p align="center">
-  <img src="Example/桌宠气泡示例.jpg" alt="MofuPaw Overview" width="500">
+  <img src="Example/桌宠气泡示例.jpg" alt="MofuPaw 概览" width="500">
 </p>
 
 ---
 
-## ✨ Features
+## ✨ 功能亮点
 
-### 🧠 AI-Powered Companion
+### 🧠 AI 智能伙伴
 
-Your pet isn't just a sprite — it's a **thinking companion** powered by large language models.
+你的宠物不只是一个动画精灵——它是一个由大语言模型驱动的**会思考的伙伴**。
 
-- **Real-time Chat** — Talk to your pet via a built-in chat panel with streaming responses
-- **Multiple AI Providers** — Supports OpenAI, Anthropic Claude, and any OpenAI-compatible API
-- **Four Personality Types** — Choose from Gentle (温柔), Lively (活泼), Quiet (安静), or Playful (调皮)
-- **Long-term Memory** — Your pet remembers your preferences, nicknames, and past conversations
-- **Emotional Intelligence** — Tracks 8 emotional states and adapts its behavior accordingly
-- **Proactive Conversations** — Your pet initiates chats based on milestones, mood changes, and daily routines
-
-<p align="center">
-  <img src="Example/AI开启确认.jpg" alt="AI Setup" width="450">
-  <img src="Example/AI陪伴功能.jpg" alt="AI Companion" width="450">
-</p>
-
-### 🎨 AI Visual Generation
-
-Give your pet a whole new look with AI image generation!
-
-- **Multiple Providers** — MiniMax, Aliyun, SiliconFlow, Tencent, OpenAI-compatible APIs
-- **Visual Overlays** — Generated images temporarily change your pet's appearance
-- **Identity Consistency** — AI maintains your pet's character identity across generations
-- **User Feedback Learning** — The system learns from your preferences over time
+- **实时聊天** — 通过内置聊天面板与宠物对话，支持流式响应
+- **多 AI 提供商** — 支持 OpenAI、Anthropic Claude 及任何 OpenAI 兼容 API
+- **四种性格** — 温柔 🌸 / 活泼 ⚡ / 安静 🌙 / 调皮 😈
+- **长期记忆** — 你的宠物会记住你的喜好、昵称和过去的对话
+- **情绪感知** — 追踪 8 种情绪状态，根据你的情绪调整行为
+- **主动对话** — 宠物会根据里程碑、情绪变化和日常习惯主动找你聊天
 
 <p align="center">
-  <img src="Example/桌宠形象自迭代.jpg" alt="AI Visual Generation" width="450">
+  <img src="Example/AI开启确认.jpg" alt="AI 设置" width="450">
+  <img src="Example/AI陪伴功能.jpg" alt="AI 陪伴功能" width="450">
 </p>
 
-### 💕 Companionship System
+### 🎨 AI 视觉生成
 
-Your relationship with your pet grows over time through **five relationship levels**:
+用 AI 图像生成给宠物换上全新造型！
 
-| Level | Name | Points | Unlock |
-|-------|------|--------|--------|
-| 1 | Acquaintance (初识) | 0 | Basic interactions |
-| 2 | Familiar (熟悉) | 100 | More dialogue options |
-| 3 | Close (亲近) | 250 | Deeper conversations |
-| 4 | Trusted (信赖) | 500 | Special interactions |
-| 5 | Bonded (默契) | 900 | Full companionship |
-
-### 🫧 Interactive Bubble System
-
-Your pet communicates through smart, contextual speech bubbles:
-
-- **Context-Aware Phrases** — Different messages when happy, hungry, tired, or just woke up
-- **Interactive Choices** — AI-generated multi-option prompts (feed, play, pet, chat)
-- **Micro-Dialogs** — Quick contextual interactions with response options
-- **Priority System** — Important messages (hungry!) always get through
+- **多平台支持** — MiniMax、阿里云、硅基流动、腾讯云、OpenAI 兼容 API
+- **视觉覆盖** — 生成的图片会临时改变宠物外观
+- **身份一致性** — AI 在生成时保持宠物的角色特征
+- **用户反馈学习** — 系统会根据你的偏好持续优化
 
 <p align="center">
-  <img src="Example/交互式气泡&关系.jpg" alt="Interactive Bubbles" width="450">
+  <img src="Example/桌宠形象自迭代.jpg" alt="AI 视觉生成" width="450">
 </p>
 
-### 🎭 Pet Engine
+### 💕 陪伴系统
 
-A fully data-driven pet simulation engine:
+你和宠物的关系会通过**五个亲密度等级**逐步升温：
 
-- **7 States** — Idle, Walking, Sleeping, Happy, Eating, Jumping, Dragging
-- **Mood Simulation** — Mood, hunger, and energy decay over time
-- **Time-of-Day Awareness** — Behavior changes from morning to night
-- **Auto-Sleep** — Your pet dozes off when you're away
-- **Random Idle Actions** — Weighted behavior scheduling for natural-feeling life
+| 等级 | 名称 | 所需点数 | 解锁内容 |
+|------|------|----------|----------|
+| 1 | 初识 | 0 | 基础互动 |
+| 2 | 熟悉 | 100 | 更多对话选项 |
+| 3 | 亲近 | 250 | 更深入的交流 |
+| 4 | 信赖 | 500 | 特殊互动 |
+| 5 | 默契 | 900 | 完全陪伴 |
+
+### 🫧 互动气泡系统
+
+你的宠物通过智能的、有情境感知的对话气泡与你沟通：
+
+- **情境语句** — 开心、饥饿、疲惫、刚睡醒时都有不同的话
+- **互动选择** — AI 生成的多选项互动提示（喂食、玩耍、抚摸、聊天）
+- **微型对话** — 快速情境互动，带有多选项回应
+- **优先级系统** — 重要消息（比如"我饿了！"）永远不会被淹没
 
 <p align="center">
-  <img src="Example/新增动作图1.png" alt="Custom Actions 1" width="450">
-  <img src="Example/新增动作图2.png" alt="Custom Actions 2" width="450">
+  <img src="Example/交互式气泡&关系.jpg" alt="互动气泡" width="450">
 </p>
 
-### 📦 Pet Library & Custom Pets
+### 🎭 宠物引擎
 
-- **Import Any Image** — Turn any sprite into a desktop pet
-- **Petdex Format** — A standardized pet package format for sharing
-- **.pet Packages** — Export and share complete pet packages
-- **Action Packs** — Modular content packs that add new animations
-- **Content Packs** — Extend pets with dialogue packs and personality packs
+完全数据驱动的宠物模拟引擎：
+
+- **7 种状态** — 待机、行走、睡觉、开心、进食、跳跃、拖拽
+- **心情模拟** — 心情、饥饿度、体力随时间自然变化
+- **时间感知** — 行为随早中晚自动变化
+- **自动入睡** — 你离开时宠物会自己打瞌睡
+- **随机待机行为** — 加权行为调度，呈现自然的生命感
 
 <p align="center">
-  <img src="Example/自定义桌宠资源.jpg" alt="Custom Pets" width="450">
-  <img src="Example/基础配置&自定义宠物.jpg" alt="Pet Settings" width="450">
+  <img src="Example/新增动作图1.png" alt="新增动作 1" width="450">
+  <img src="Example/新增动作图2.png" alt="新增动作 2" width="450">
 </p>
 
-### 🖥️ Desktop Integration
+### 📦 宠物图鉴 & 自定义宠物
 
-- **Always on Top** — Floats above all windows without stealing focus
-- **Transparent Hit-Test** — Clicks pass through except on the pet itself
-- **Draggable** — Drag your pet anywhere on screen
-- **Position Memory** — Remembers where you left it
-- **Multi-Display** — Works across multiple monitors
-- **Menu Bar Control** — Full control from the 🐾 menu bar icon
+- **图片导入** — 把任意图片变成桌面宠物
+- **Petdex 格式** — 标准化的宠物包格式，方便分享
+- **.pet 包** — 导出并分享完整的宠物包
+- **动作包** — 模块化内容包，为现有宠物添加新动画
+- **内容包** — 用对话包和性格包扩展宠物能力
 
 <p align="center">
-  <img src="Example/桌宠菜单.jpg" alt="Context Menu" width="300">
+  <img src="Example/自定义桌宠资源.jpg" alt="自定义宠物" width="450">
+  <img src="Example/基础配置&自定义宠物.jpg" alt="宠物设置" width="450">
 </p>
 
-### ⌨️ Advanced Features
+### 🖥️ 桌面集成
 
-- **Desktop Space Awareness** — Pet reacts to nearby windows and screen edges
-- **Input Sync** — Optionally reacts to your keyboard/mouse activity
-- **External API** — Unix socket IPC for external tool integration
-- **Sound Effects** — Audio feedback for interactions (click, pet, feed)
-- **Launch at Login** — Start with macOS
+- **窗口置顶** — 悬浮在所有窗口之上，不抢夺焦点
+- **透明穿透** — 点击只在宠物身上生效，其余区域穿透
+- **自由拖拽** — 把宠物拖到屏幕任何位置
+- **位置记忆** — 记住你上次放置的位置
+- **多显示器** — 支持多屏幕环境
+- **菜单栏控制** — 通过 🐾 菜单栏图标完全掌控
+
+<p align="center">
+  <img src="Example/桌宠菜单.jpg" alt="右键菜单" width="300">
+</p>
+
+### ⌨️ 进阶功能
+
+- **桌面空间感知** — 宠物对附近的窗口和屏幕边缘做出反应
+- **输入同步** — 可选地跟踪键鼠活动，让宠物对你的工作做出反应
+- **外部 API** — Unix Socket IPC，支持外部工具集成
+- **音效反馈** — 点击、抚摸、喂食时有声音反馈
+- **开机自启** — 跟随 macOS 自动启动
 
 ---
 
-## 🚀 Getting Started
+## 🚀 快速开始
 
-### Prerequisites
+### 环境要求
 
-- **macOS 13.0** (Ventura) or later
-- **Xcode 15+** with Swift 6 toolchain
-- (Optional) An AI API key for chat and visual features
+- **macOS 13.0** (Ventura) 或更高版本
+- **Xcode 15+** 及 Swift 6 工具链
+- （可选）AI API 密钥，用于聊天和视觉生成功能
 
-### Build from Source
+### 从源码构建
 
 ```bash
-# Clone the repository
+# 克隆仓库
 git clone https://github.com/Estellanini/MofuPaw.git
 cd MofuPaw
 
-# Build
+# 构建
 swift build
 
-# Run
+# 运行
 swift run MofuPaw
 ```
 
-### Package a Release
+### 打包发布
 
 ```bash
 ./Scripts/package_release.sh
 ```
 
-This creates a standalone `.app` bundle you can move to `/Applications`.
+生成独立的 `.app` 应用包，可直接拖入 `/Applications` 使用。
 
 ---
 
-## ⚙️ Configuration
+## ⚙️ 配置指南
 
-### AI Setup
+### AI 设置
 
-1. Open the 🐾 menu bar icon → **Settings**
-2. Go to **AI Settings** panel
-3. Choose your provider (OpenAI / Anthropic / Custom)
-4. Enter your API key (stored securely in macOS Keychain)
-5. Select a personality for your pet
+1. 点击菜单栏 🐾 图标 → **设置**
+2. 进入 **AI 设置** 面板
+3. 选择提供商（OpenAI / Anthropic / 自定义）
+4. 输入 API 密钥（安全存储在 macOS 钥匙串中）
+5. 为你的宠物选择一种性格
 
-### Image Generation Setup
+### 图像生成设置
 
-1. Settings → **AI Visual** panel
-2. Choose an image generation provider
-3. Configure API credentials
-4. Your pet can now transform with AI-generated visuals!
+1. 设置 → **AI 视觉** 面板
+2. 选择图像生成提供商
+3. 配置 API 凭据
+4. 现在你的宠物可以通过 AI 生成变装啦！
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ 项目架构
 
-MofuPaw is built with a clean, protocol-oriented architecture in pure Swift:
+MofuPaw 采用简洁的面向协议架构，纯 Swift 编写：
 
 ```
 MofuPaw/
-├── App/                 # App lifecycle, coordinator, commands
-├── PetCore/             # State machine, mood engine, behavior scheduling
-├── PetRendering/        # Sprite sheet rendering, animation player
-├── PetAssets/           # Pet definitions, animation clips
-├── PetWindow/           # Floating panel, drag, hit-test
-├── Bubble/              # Speech bubble engine, scheduling
-├── InteractiveBubble/   # AI-powered interactive prompts
-├── AICompanion/         # Chat engine, memory, personality, emotions
-├── AIVisualAction/      # Visual action mediation
-├── AIVisualGeneration/  # Image generation providers
-├── Companionship/       # Relationship system, micro-dialogs
-├── PetLibrary/          # Pet import/export, custom pets
-├── Petdex/              # Petdex format support
-├── ActionPacks/         # Modular animation packs
-├── AdvancedFeatures/    # Desktop space, external API, input sync
-├── Sound/               # Audio feedback
-├── Preferences/         # User settings persistence
-└── MenuBar/             # Status bar UI
+├── App/                 # 应用生命周期、协调器、命令
+├── PetCore/             # 状态机、心情引擎、行为调度
+├── PetRendering/        # 精灵图渲染、动画播放器
+├── PetAssets/           # 宠物定义、动画片段
+├── PetWindow/           # 浮动面板、拖拽、点击穿透
+├── Bubble/              # 气泡引擎、调度
+├── InteractiveBubble/   # AI 驱动的互动提示
+├── AICompanion/         # 聊天引擎、记忆、性格、情绪
+├── AIVisualAction/      # 视觉动作调解
+├── AIVisualGeneration/  # 图像生成提供商
+├── Companionship/       # 亲密度系统、微型对话
+├── PetLibrary/          # 宠物导入导出、自定义宠物
+├── Petdex/              # Petdex 格式支持
+├── ActionPacks/         # 模块化动画包
+├── AdvancedFeatures/    # 桌面空间、外部API、输入同步
+├── Sound/               # 音效反馈
+├── Preferences/         # 用户偏好持久化
+└── MenuBar/             # 状态栏 UI
 ```
 
-**Key patterns:**
-- **Coordinator Pattern** — Central `AppCoordinator` routes all commands
-- **MVVM + SwiftUI** — Views bound to `ObservableObject` view models
-- **Dependency Injection** — `AppDependencyContainer` wires everything; no singletons
-- **Event-Driven** — `PetEvent`, `CompanionEvent`, `BubbleTrigger` drive behavior
-- **Pluggable Providers** — AI, image generation, and content packs via registries
+**核心设计模式：**
+- **协调器模式** — 中央 `AppCoordinator` 路由所有命令
+- **MVVM + SwiftUI** — 视图绑定 `ObservableObject` 视图模型
+- **依赖注入** — `AppDependencyContainer` 组装一切，无全局单例
+- **事件驱动** — `PetEvent`、`CompanionEvent`、`BubbleTrigger` 驱动行为
+- **可插拔提供商** — AI、图像生成、内容包均通过注册表管理
 
 ---
 
-## 🧪 Testing
+## 🧪 测试
 
 ```bash
-# Run all tests
+# 运行所有测试
 swift test
 
-# Run specific test suites
+# 运行特定测试套件
 swift test --filter DesktopPetUnitTests
 swift test --filter DesktopPetValidation
 ```
 
 ---
 
-## 🤝 Contributing
+## 🤝 参与贡献
 
-Contributions are welcome! Here's how you can help:
+欢迎各种形式的贡献！
 
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
+1. **Fork** 本仓库
+2. **创建** 功能分支 (`git checkout -b feature/amazing-feature`)
+3. **提交** 更改 (`git commit -m '添加超棒功能'`)
+4. **推送** 到分支 (`git push origin feature/amazing-feature`)
+5. **发起** Pull Request
 
-### Ideas for Contributions
+### 贡献方向
 
-- 🎨 New pet designs and sprite sheets
-- 🗣️ Additional personality profiles
-- 🌍 Localization / internationalization
-- 🧩 New content packs (action, dialogue, personality)
-- 🐛 Bug fixes and performance improvements
-- 📖 Documentation improvements
-
----
-
-## 🙏 Acknowledgments
-
-- **[Petdex](https://github.com/crafter-station/petdex)** — A community-driven pet sprite gallery ([petdex.crafter.run](https://petdex.crafter.run)). MofuPaw supports importing Petdex packages (`.zip`), but does not bundle, modify, or redistribute any Petdex assets. All Petdex resources are downloaded by users at runtime and remain subject to their original license.
+- 🎨 新的宠物设计和精灵图
+- 🗣️ 更多性格配置
+- 🌍 国际化 / 多语言支持
+- 🧩 新内容包（动作、对话、性格）
+- 🐛 Bug 修复和性能优化
+- 📖 文档改进
 
 ---
 
-## 📄 License
+## 🙏 致谢
 
-This project is licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International** License — see the [LICENSE](LICENSE) file for details.
+- **[Petdex](https://github.com/crafter-station/petdex)** — 社区驱动的公共宠物精灵图库（[petdex.crafter.run](https://petdex.crafter.run)）。MofuPaw 支持导入 Petdex 包（`.zip`），但不内置、不分发、不修改任何 Petdex 资源。所有 Petdex 资源均由用户运行时下载，遵循其原始授权。
 
-This means you are free to share and adapt this project, but **commercial use is not permitted**. Any derivative works must be shared under the same license.
+---
+
+## 📄 开源协议
+
+本项目基于 **知识共享署名-非商业性使用-相同方式共享 4.0 国际协议 (CC BY-NC-SA 4.0)** 开源 — 详见 [LICENSE](LICENSE) 文件。
+
+这意味着你可以自由分享和改编本项目，但**不得用于商业目的**，且衍生作品必须以相同协议发布。
 
 ---
 
 <p align="center">
-  Made with ❤️ and Swift<br>
-  <sub>If you like MofuPaw, give it a ⭐!</sub>
+  用 ❤️ 和 Swift 打造<br>
+  <sub>喜欢 MofuPaw？给个 ⭐ 吧！</sub>
 </p>
